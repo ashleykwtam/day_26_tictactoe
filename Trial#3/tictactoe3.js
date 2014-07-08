@@ -15,34 +15,51 @@ var xWin = false;
 var oWin = false;
 
 $(document).ready(function() {
-  newGame();
+  startOfGame();
+  setup();
+
+  $('#restart').click(function(){
+    $('td').empty();  // cosmetic effect
+    $('td').one('click', tdClick);
+    checkBoard();
+    turn = 0;
+    xWin = false;
+    oWin = false;
+  });
 });
 
-function newGame() {
+function startOfGame(){
   $('td').on({
     mouseover: function(){
       $(this).css("background-color", "gray");
     },
     mouseleave: function(){
       $(this).css("background-color", "white");
-    },
-    click: function(event) {
-    if (turn === 0) {
-      $(this).text(playerX).off('click');
-      checkBoard();
-      checkWin();
-      clearBoard();
-      turn = 1;
-    } else {
-      $(this).text(playerO).off('click');
-      checkBoard();
-      checkWin();
-      clearBoard();
-      turn = 0;
-    }
-      $(this).off('mouseover');
     }
   });
+}
+
+function tdClick (evt) {
+  if (turn % 2 == 0) {
+    $(this).text(playerX);
+    checkBoard();
+    checkWin();
+    turn = 1;
+  } 
+  else {
+    $(this).text(playerO);
+    checkBoard();
+    checkWin();
+    turn = 0;
+  }
+  $('this').off('mouseover'); 
+}
+
+
+function setup() {
+  $('td').one(
+    'click', tdClick
+  );
 }
 
 function checkBoard() {
@@ -92,10 +109,4 @@ function checkWin() {
     ) {
       alert("It's a tie!");
     }
-}
-
-function clearBoard(){
-  $('#restart').click(function(){
-    $('td').empty();
-  });
 }
