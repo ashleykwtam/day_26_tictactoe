@@ -17,26 +17,18 @@ var oWin = false;
 $(document).ready(function() {
   startOfGame();
   setup();
-
-  $('#restart').click(function(){
-    $('td').empty();  // cosmetic effect
-    $('td').one('click', tdClick);
-    checkBoard();
-    turn = 0;
-    xWin = false;
-    oWin = false;
-  });
+  restartGame();
 });
 
 function startOfGame(){
-  $('td').on({
-    mouseover: function(){
-      $(this).css("background-color", "gray");
-    },
-    mouseleave: function(){
-      $(this).css("background-color", "white");
-    }
-  });
+  // $('td').on({
+  //   mouseover: function(){
+  //     $(this).css("background-color", "gray");
+  //   },
+  //   mouseleave: function(){
+  //     $(this).css("background-color", "white");
+  //   }
+  // });
 }
 
 function tdClick (evt) {
@@ -45,14 +37,14 @@ function tdClick (evt) {
     checkBoard();
     checkWin();
     turn = 1;
-  } 
+  }
   else {
     $(this).text(playerO);
     checkBoard();
     checkWin();
     turn = 0;
   }
-  $('this').off('mouseover'); 
+  $('this').off('mouseover');
 }
 
 
@@ -86,7 +78,9 @@ function checkWin() {
   ) {
     xWin = true;
     alert("X Wins!");
-  } else if ((a1 == a2 && a1 == a3 && (a1 == "O")) ||
+    $('td').off("click");
+  } else if (
+      (a1 == a2 && a1 == a3 && (a1 == "O")) ||
       (b1 == b2 && b1 == b3 && (b1 == "O")) ||
       (c1 == c2 && c1 == c3 && (c1 == "O")) ||
       (a1 == b1 && a1 == c1 && (a1 == "O")) ||
@@ -97,7 +91,9 @@ function checkWin() {
     ) {
       oWin = true;
       alert("O Wins!");
-  } else if (((a1 == "X") || (a1 == "O")) &&
+      $('td').off('click');
+  } else if (
+      ((a1 == "X") || (a1 == "O")) &&
       ((a2 == "X") || (a2 == "O")) &&
       ((a3 == "X") || (a3 == "O")) &&
       ((b1 == "X") || (b1 == "O")) &&
@@ -109,4 +105,16 @@ function checkWin() {
     ) {
       alert("It's a tie!");
     }
+}
+
+function restartGame(){
+  $('#restart').click(function(){
+    $('td').empty();  // cosmetic effect
+    $('td').one('click', tdClick);
+    checkBoard();
+    turn = 0;
+    xWin = false;
+    oWin = false;
+  });
+  startOfGame();
 }

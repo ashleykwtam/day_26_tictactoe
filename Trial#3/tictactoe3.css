@@ -74,6 +74,9 @@ td {
   font-size: 100px;
   font-family: Helvetica;
 }
+td:hover{
+  background-color: gray;
+}
 button{
   width: 110px;
   height: 20px;
