@@ -21,25 +21,34 @@ $(document).ready(function() {
 });
 
 function startOfGame(){
-  // $('td').on({
-  //   mouseover: function(){
-  //     $(this).css("background-color", "gray");
-  //   },
-  //   mouseleave: function(){
-  //     $(this).css("background-color", "white");
-  //   }
+  // $('td').hover({
+    // function(){
+    //   $(this).addClass('hover');
+    // }, function(){
+    //   $(this).removeClass('hover');
+    // }
+    $('td').mouseover(function(){
+      if (!$(this).hasClass('active')){
+        $(this).css("background-color", "gray");
+      }
+    });
+    $('td').mouseleave(function(){
+      if (!$(this).hasClass('active')){
+        $(this).css("background-color", "white");
+      }
+    });
   // });
 }
 
 function tdClick (evt) {
   if (turn % 2 == 0) {
-    $(this).text(playerX);
+    $(this).text(playerX).addClass('active');
     checkBoard();
     checkWin();
     turn = 1;
   }
   else {
-    $(this).text(playerO);
+    $(this).text(playerO).off("mouseenter mouseleave");
     checkBoard();
     checkWin();
     turn = 0;
